@@ -14,6 +14,17 @@ const map = {
 };
 
 const themeRegex = /^prism-(.*).css$/;
+// Very mysterious - this is the original regex. Clearly the content
+// of the "class" attribute is extracted as is, so that would be
+// "language-something". Below, that value is used to set the class
+// for the resulting elements, with the expression language-${lang}
+// - where lang is what this regex found. Clearly, the result is
+// "language-language-something", which is exactly what I see in the
+// browser - now. However, things worked previously, somehow - I
+// don't understand how this could have ever worked.
+// Note: I did move to markdown-it from marked today. However, I'm
+// pretty sure that after that switch the prism stuff was still
+// working fine for a while.
 const regex = /<pre><code class="(.*)?">([\s\S]*?)<\/code><\/pre>/gim;
 const captionRegex = /<p><code>(?![\s\S]*<code)(.*?)\s(.*?)\n([\s\S]*)<\/code><\/p>/gim;
 
@@ -113,6 +124,9 @@ function PrismPlugin(data) {
 
   data.content = data.content.replace(regex, (origin, lang, code) => {
     const lineNumbers = line_number ? "line-numbers" : "";
+    // See comment on regex above - remove language- prefix if
+    // necessary
+    const lang = lang.startsWith("language-") ? lang.slice(9) : lang;
     const startTag = `<pre class="${lineNumbers} language-${lang}"><code class="language-${lang}">`;
     const endTag = `</code></pre>`;
     code = unescape(code);
