@@ -101,6 +101,8 @@ if (!prismTheme) {
 const prismThemeFileName = prismTheme.filename;
 const prismThemeFilePath =
   custom_css === null ? prismTheme.path : path.join(hexo.base_dir, custom_css);
+console.log("prismThemeFilePath is ", prismThemeFilePath);
+
 /**
  * Code transform for prism plugin.
  * @param {Object} data
