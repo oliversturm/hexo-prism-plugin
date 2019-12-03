@@ -21,9 +21,13 @@ const getPrism = (externalLangs = [], forceReinitialize = false) => {
       "prism-clike",
       "prism-markup",
       "prism-javascript",
+      "prism-javadoclike",
       "prism-c",
+      "prism-cpp",
       "prism-ruby",
-      "prism-css"
+      "prism-css",
+      "prism-sql",
+      "prism-t4-templating"
     ];
     const prismComponents = path.dirname(require.resolve(prismCore));
     const components = prelude.concat(
