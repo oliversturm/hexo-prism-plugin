@@ -31,7 +31,6 @@ const getPrism = (externalLangs = [], forceReinitialize = false) => {
     ];
     const prismComponents = path.dirname(require.resolve(prismCore));
     const components = prelude.concat(
-      externalLangs,
       fs
         .readdirSync(prismComponents)
         .map(component => component.replace(/(\.min)?\.js$/, ""))
@@ -41,6 +40,7 @@ const getPrism = (externalLangs = [], forceReinitialize = false) => {
     componentsSet.forEach(component =>
       require(path.join(prismComponents, component))
     );
+    externalLangs.forEach(item => require(item));
 
     initialized = true;
   }
