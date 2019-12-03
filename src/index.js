@@ -14,18 +14,15 @@ const map = {
 };
 
 const themeRegex = /^prism-(.*).css$/;
-// Very mysterious - this is the original regex. Clearly the content
-// of the "class" attribute is extracted as is, so that would be
-// "language-something". Below, that value is used to set the class
-// for the resulting elements, with the expression language-${lang}
-// - where lang is what this regex found. Clearly, the result is
-// "language-language-something", which is exactly what I see in the
-// browser - now. However, things worked previously, somehow - I
-// don't understand how this could have ever worked.
-// Note: I did move to markdown-it from marked today. However, I'm
-// pretty sure that after that switch the prism stuff was still
-// working fine for a while.
-const regex = /<pre><code class="(.*)?">([\s\S]*?)<\/code><\/pre>/gim;
+
+// This is the old regex. Clearly this didn't take into account that
+// most markdown converters use "language-something" now. I think
+// I remember that old versions of marked only used "something"
+// instead - perhaps there was a fixed dependency somewhere to an
+// old "marked"? Anyway, changed this so it works with or without
+// the "language-" prefix.
+//const regex = /<pre><code class="(.*)?">([\s\S]*?)<\/code><\/pre>/gim;
+const regex = /<pre><code class="(language-)?(.*)?">([\s\S]*?)<\/code><\/pre>/gim;
 const captionRegex = /<p><code>(?![\s\S]*<code)(.*?)\s(.*?)\n([\s\S]*)<\/code><\/p>/gim;
 
 /**
@@ -122,31 +119,31 @@ function PrismPlugin(data) {
     );
   }
 
-  data.content = data.content.replace(regex, (origin, lang, code) => {
-    const lineNumbers = line_number ? "line-numbers" : "";
-    // See comment on regex above - remove language- prefix if
-    // necessary
-    const lang = lang.startsWith("language-") ? lang.slice(9) : lang;
-    const startTag = `<pre class="${lineNumbers} language-${lang}"><code class="language-${lang}">`;
-    const endTag = `</code></pre>`;
-    code = unescape(code);
-    let parsedCode = "";
-    if (Prism.languages[lang]) {
-      parsedCode = Prism.highlight(code, Prism.languages[lang]);
-    } else {
-      parsedCode = code;
+  data.content = data.content.replace(
+    regex,
+    (unwanted1, unwanted2, lang, code) => {
+      const lineNumbers = line_number ? "line-numbers" : "";
+      const startTag = `<pre class="${lineNumbers} language-${lang}"><code class="language-${lang}">`;
+      const endTag = `</code></pre>`;
+      code = unescape(code);
+      let parsedCode = "";
+      if (Prism.languages[lang]) {
+        parsedCode = Prism.highlight(code, Prism.languages[lang]);
+      } else {
+        parsedCode = code;
+      }
+      if (line_number) {
+        const match = parsedCode.match(/\n(?!$)/g);
+        const linesNum = match ? match.length + 1 : 1;
+        let lines = new Array(linesNum + 1);
+        lines = lines.join("<span></span>");
+        const startLine = '<span aria-hidden="true" class="line-numbers-rows">';
+        const endLine = "</span>";
+        parsedCode += startLine + lines + endLine;
+      }
+      return startTag + parsedCode + endTag;
     }
-    if (line_number) {
-      const match = parsedCode.match(/\n(?!$)/g);
-      const linesNum = match ? match.length + 1 : 1;
-      let lines = new Array(linesNum + 1);
-      lines = lines.join("<span></span>");
-      const startLine = '<span aria-hidden="true" class="line-numbers-rows">';
-      const endLine = "</span>";
-      parsedCode += startLine + lines + endLine;
-    }
-    return startTag + parsedCode + endTag;
-  });
+  );
 
   return data;
 }
