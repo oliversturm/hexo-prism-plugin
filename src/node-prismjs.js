@@ -27,7 +27,8 @@ const getPrism = (externalLangs = [], forceReinitialize = false) => {
       "prism-ruby",
       "prism-css",
       "prism-sql",
-      "prism-t4-templating"
+      "prism-t4-templating",
+      "prism-markup-templating"
     ];
     const prismComponents = path.dirname(require.resolve(prismCore));
     const components = prelude.concat(
