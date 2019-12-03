@@ -41,12 +41,7 @@ const getPrism = (externalLangs = [], forceReinitialize = false) => {
       require(path.join(prismComponents, component))
     );
     externalLangs.forEach(item => {
-      try {
-        require(item);
-      } catch (e) {
-        console.error(`Error requiring ${item}: ${e.message}`);
-        console.error(process.cwd());
-      }
+      require(item.startsWith(".") ? path.join(process.cwd(), item) : item);
     });
 
     initialized = true;
