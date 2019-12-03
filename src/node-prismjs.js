@@ -45,7 +45,7 @@ const getPrism = (externalLangs = [], forceReinitialize = false) => {
         require(item);
       } catch (e) {
         console.error(`Error requiring ${item}: ${e.message}`);
-        require.resolve.paths(item);
+        console.error(require.resolve.paths(item));
       }
     });
 
