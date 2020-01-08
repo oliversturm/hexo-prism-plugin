@@ -29,7 +29,7 @@ const getPrism = (externalLangs = [], forceReinitialize = false) => {
       'prism-sql',
       'prism-t4-templating',
       'prism-markup-templating',
-      'prism-sparql'
+      'prism-turtle'
     ];
     const prismComponents = path.dirname(require.resolve(prismCore));
     const components = prelude.concat(
