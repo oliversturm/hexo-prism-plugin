@@ -2,13 +2,13 @@ dependencies:
   dir-resolve: 1.0.2
   hexo-fs: 2.0.0
   prism-themes: 1.3.0
-  prismjs: 1.17.1
+  prismjs: 1.18.0
 lockfileVersion: 5.1
 packages:
   /anymatch/3.1.1:
     dependencies:
       normalize-path: 3.0.0
-      picomatch: 2.1.1
+      picomatch: 2.2.1
     dev: false
     engines:
       node: '>= 8'
@@ -32,7 +32,7 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-b8um+L1RzM3WDSzvhm6gIz1yfTbBt6YTlcEKAvsmqCZZFw46z626lVj9j1yEPW33H5H+lBQpZMP1k8l+78Ha0A==
-  /chokidar/3.3.0:
+  /chokidar/3.3.1:
     dependencies:
       anymatch: 3.1.1
       braces: 3.0.2
@@ -40,14 +40,14 @@ packages:
       is-binary-path: 2.1.0
       is-glob: 4.0.1
       normalize-path: 3.0.0
-      readdirp: 3.2.0
+      readdirp: 3.3.0
     dev: false
     engines:
       node: '>= 8.10.0'
     optionalDependencies:
       fsevents: 2.1.2
     resolution:
-      integrity: sha512-dGmKLDdT3Gdl7fBUe8XK+gAtGmzy5Fn0XkkWQuYxGIgWVPPse2CxFA5mtrlD0TOHaHjEUqkWNyP1XdHoJES/4A==
+      integrity: sha512-4QYCEWOcK3OJrxwvyyAOxFuhpvOVCYkr33LPfFNBjAD/w3sEzWsp2BUOkI4l9bHvWioAd0rc6NlHUOEaWkTeqg==
   /clipboard/2.0.4:
     dependencies:
       good-listener: 1.2.2
@@ -109,7 +109,7 @@ packages:
   /hexo-fs/2.0.0:
     dependencies:
       bluebird: 3.7.2
-      chokidar: 3.3.0
+      chokidar: 3.3.1
       escape-string-regexp: 2.0.0
       graceful-fs: 4.2.3
     dev: false
@@ -151,30 +151,30 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==
-  /picomatch/2.1.1:
+  /picomatch/2.2.1:
     dev: false
     engines:
       node: '>=8.6'
     resolution:
-      integrity: sha512-OYMyqkKzK7blWO/+XZYP6w8hH0LDvkBvdvKukti+7kqYFCiEAk+gI3DWnryapc0Dau05ugGTy0foQ6mqn4AHYA==
+      integrity: sha512-ISBaA8xQNmwELC7eOjqFKMESB2VIqt4PPDD0nsS95b/9dZXvVKOlz9keMSnoGGKcOHXfTvDD6WMaRoSc9UuhRA==
   /prism-themes/1.3.0:
     dev: false
     resolution:
       integrity: sha512-4hDQyNuBRyWVvwHeTH4yY5TIWrl6BHmhoh85kgfTFgwklGerWA3R2RFp7Sg0zPCnQS8SsloKsEIN3ao63KhiIw==
-  /prismjs/1.17.1:
+  /prismjs/1.18.0:
     dev: false
     optionalDependencies:
       clipboard: 2.0.4
     resolution:
-      integrity: sha512-PrEDJAFdUGbOP6xK/UsfkC5ghJsPJviKgnQOoxaDbBjwc8op68Quupwt1DeAFoG8GImPhiKXAvvsH7wDSLsu1Q==
-  /readdirp/3.2.0:
+      integrity: sha512-N0r3i/Cto516V8+GKKamhsPVZSFcO0TMUBtIDW6uq6BVqoC3FNtZVZ+cmH16N2XtGQlgRN+sFUTjOdCsEP51qw==
+  /readdirp/3.3.0:
     dependencies:
-      picomatch: 2.1.1
+      picomatch: 2.2.1
     dev: false
     engines:
-      node: '>= 8'
+      node: '>=8.10.0'
     resolution:
-      integrity: sha512-crk4Qu3pmXwgxdSgGhgA/eXiJAPQiX4GMOZZMXnqKxHX7TaoL+3gQVo/WeuAiogr07DpnfjIMpXXa+PAIvwPGQ==
+      integrity: sha512-zz0pAkSPOXXm1viEwygWIPSPkcBYjW1xU5j/JBh5t9bGCJwa6f9+BJa6VaB2g+b55yVrmXzqkyLf4xaWYM0IkQ==
   /select/1.1.2:
     dev: false
     optional: true
@@ -197,4 +197,4 @@ specifiers:
   dir-resolve: ^1.0.2
   hexo-fs: ^2.0.0
   prism-themes: ^1.3.0
-  prismjs: ^1.17.1
+  prismjs: ^1.18.0
