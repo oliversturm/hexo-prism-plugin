@@ -10,7 +10,10 @@ const map = {
   "&amp;": "&",
   "&gt;": ">",
   "&lt;": "<",
-  "&quot;": '"'
+  "&quot;": '"',
+  // Feb 2021: I find that suddenly { and } are replaced by HTML entities.
+  "&#123;": "{",
+  "&#125;": "}",
 };
 
 const themeRegex = /^prism-(.*).css$/;
@@ -33,7 +36,7 @@ const captionRegex = /<p><code>(?![\s\S]*<code)(.*?)\s(.*?)\n([\s\S]*)<\/code><\
 function unescape(str) {
   if (!str || str === null) return "";
   const re = new RegExp("(" + Object.keys(map).join("|") + ")", "g");
-  return String(str).replace(re, match => map[match]);
+  return String(str).replace(re, (match) => map[match]);
 }
 
 /**
@@ -49,7 +52,7 @@ function toThemeMap(basePath, filename) {
   return {
     name: matches[1],
     filename,
-    path: path.join(basePath, filename)
+    path: path.join(basePath, filename),
   };
 }
 
@@ -60,10 +63,10 @@ const extraThemeDir = dirResolve("prism-themes/themes");
 const prismMainFile = require.resolve("prismjs");
 const standardThemes = fs
   .listDirSync(prismThemeDir)
-  .map(themeFileName => toThemeMap(prismThemeDir, themeFileName));
+  .map((themeFileName) => toThemeMap(prismThemeDir, themeFileName));
 const extraThemes = fs
   .listDirSync(extraThemeDir)
-  .map(themeFileName => toThemeMap(extraThemeDir, themeFileName));
+  .map((themeFileName) => toThemeMap(extraThemeDir, themeFileName));
 
 // Since the regex will not match for the default "prism.css" theme,
 // we filter the null theme out and manually add the default theme to the array
@@ -71,7 +74,7 @@ const themes = standardThemes.concat(extraThemes).filter(Boolean);
 themes.push({
   name: "default",
   filename: "prism.css",
-  path: path.join(prismThemeDir, "prism.css")
+  path: path.join(prismThemeDir, "prism.css"),
 });
 
 // If prism plugin has not been configured, it cannot be initialized properly.
@@ -89,13 +92,13 @@ const extraLangs = hexo.config.prism_plugin.extraLangs || [];
 
 const Prism = getPrism(extraLangs);
 
-const prismTheme = themes.find(theme => theme.name === prismThemeName);
+const prismTheme = themes.find((theme) => theme.name === prismThemeName);
 if (!prismTheme) {
   throw new Error(
     "Invalid theme " +
       prismThemeName +
       ". Valid Themes: \n" +
-      themes.map(t => t.name).concat("\n")
+      themes.map((t) => t.name).concat("\n")
   );
 }
 const prismThemeFileName = prismTheme.filename;
@@ -156,8 +159,8 @@ function copyAssets() {
   const assets = [
     {
       path: `css/${prismThemeFileName}`,
-      data: () => fs.createReadStream(prismThemeFilePath)
-    }
+      data: () => fs.createReadStream(prismThemeFilePath),
+    },
   ];
 
   // If line_number is enabled in plugin config add the corresponding stylesheet
@@ -167,7 +170,7 @@ function copyAssets() {
       data: () =>
         fs.createReadStream(
           path.join(prismLineNumbersPluginDir, "prism-line-numbers.css")
-        )
+        ),
     });
   }
 
@@ -175,7 +178,7 @@ function copyAssets() {
   if (mode === "realtime") {
     assets.push({
       path: "js/prism.js",
-      data: () => fs.createReadStream(prismMainFile)
+      data: () => fs.createReadStream(prismMainFile),
     });
     if (line_number) {
       assets.push({
@@ -183,7 +186,7 @@ function copyAssets() {
         data: () =>
           fs.createReadStream(
             path.join(prismLineNumbersPluginDir, "prism-line-numbers.min.js")
-          )
+          ),
       });
     }
   }
@@ -199,7 +202,7 @@ function copyAssets() {
 function importAssets(code, data) {
   const js = [];
   const css = [
-    `<link rel="stylesheet" href="${rootPath}css/${prismThemeFileName}" type="text/css">`
+    `<link rel="stylesheet" href="${rootPath}css/${prismThemeFileName}" type="text/css">`,
   ];
 
   if (line_number && custom_css === null) {
