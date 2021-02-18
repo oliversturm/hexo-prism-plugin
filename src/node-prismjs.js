@@ -31,6 +31,7 @@ const getPrism = (externalLangs = [], forceReinitialize = false) => {
       "prism-t4-templating",
       "prism-markup-templating",
       "prism-turtle",
+      "prism-scheme",
     ];
     const prismComponents = path.dirname(require.resolve(prismCore));
     const components = prelude.concat(
